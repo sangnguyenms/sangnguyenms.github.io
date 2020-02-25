@@ -1,0 +1,22 @@
+- Dùng cảm biến DHT11 để đo nhiệt độ và độ ẩm trong phòng. Trong bài này, em dùng thư viện 
+DHTesp.h có sẵn để điều khiển hoạt động của DHT11.
+- Các thiết bị như Heater, Heatpump, quạt,... em dùng các đèn LED để mô phỏng.
+- Về hoạt động của LTD: 
+    + Vì Heater và Heatpump hoạt động đối ngược nhau nên em dùng một biến 
+    isHeaterRun để điều khiển hoạt động của hai thiết bị này. Nếu 'isHeaterRun = true' thì Heater và Fan2
+    hoạt động, Heatpump và Fan3 tắt, và ngược lại đối với 'isHeaterRun = false'. Biến 'isHeaterRun' được
+    thay đổi giá trị mỗi 10s theo TimerDriver bởi hàm 'RunHeatPeriodically'.
+    + Fan1 hoạt động dựa trên giá trị độ ẩm mà DHT11 đo được so với giá trị MAX_HUMIDITY.
+    + Hàm 'Choose_DHT' điều khiển hoạt động của 3 DHT trong hệ thống, bao gồm các việc: đọc giá trị 
+    nhiệt độ & độ ẩm, kiểm tra DHT11 nào còn hoạt động (thông qua việc đọc giá trị có thành công hay
+    không) và từ các giá trị nhiệt độ & độ ẩm thu được, ta thay đổi giá trị các biến điều khiển các thiết 
+    bị cho phù hợp với yêu cầu. Nếu cả 3 DHT11 đều không hoạt động thì toàn bộ hệ thống sẽ ngừng.
+    Hàm 'Choose_DHT' được thêm vào TimerDriver và được gọi mỗi 0.2s.
+    + Có 2 máy trạng thái hoạt động dựa trên nhiệt độ và độ ẩm: 'FSM_Temperature' điều khiển hoạt động
+    của Heater, Fan2, Heatpump và Fan3. Còn 'FSM_Humidity' thì điều khiển hoạt động của Fan1.
+- Hướng phát triển trong tương lai:
+    + Hiện thực hoạt động của các thiết bị Heater, Heatpump và quạt.
+    + Dùng cảm biến nhiệt độ & độ ẩm khác chính xác hơn.
+    + Tự động reset hệ thống sau một thời gian để hoạt động ổn định hơn.
+    + Lưu trữ nhiệt độ & độ ẩm đo được và truyển thông tin hoạt động của hệ thống LTD (thiết bị nào 
+    không hoạt động) về các thiết bị di động như điện thoại hay laptop thông qua wifi.
